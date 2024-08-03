@@ -12,7 +12,7 @@
       <div class="show-tasks">
         <div v-for="(t, i) in tasks" :key="i" class="data">
           <div class="bullt" @click="completeTask(t)">
-            <span></span>
+            <span :class="t.completed ? 'active' : ''"></span>
           </div>
           <div :class="t.completed ? 'desc complete' : 'desc'">
             {{ t.title }}
@@ -53,6 +53,11 @@ function addTask() {
   } else {
     mode = "addition";
   }
+  task.value = {
+    title: "",
+    completed: false,
+  };
+  console.log(tasks.value);
   saveData();
 }
 //save data in local storage
@@ -72,6 +77,7 @@ const completeTask = (t) => {
 };
 //remove
 function deleteTodo(i) {
+  if (tasks.value.at(i) == task.value) mode = "addition";
   tasks.value.splice(i, 1);
   saveData();
   if (task.value != null) emptyInput();
@@ -81,6 +87,7 @@ let EditTodo = (t) => {
   task.value = t;
   mode = "edition";
 };
+//submit when click in Enter key
 </script>
 
 <style lang="scss" scoped>
@@ -124,6 +131,7 @@ let EditTodo = (t) => {
       margin-bottom: 30px;
       input[type="text"],
       input[type="submit"] {
+        color: #265073;
         padding: 10px 20px;
         border-radius: 20px;
         border: none;
@@ -158,30 +166,61 @@ let EditTodo = (t) => {
         }
         .bullt {
           span {
+            position: relative;
             display: block;
-            width: 15px;
-            height: 15px;
+            width: 16px;
+            height: 16px;
             border: 1px solid #209596;
             border-radius: 50%;
             margin-right: 5px;
+            &::before {
+              content: "";
+              position: absolute;
+              left: 50%;
+              top: 50%;
+              transform: translate(-50%, -50%);
+              width: 10px;
+              height: 10px;
+              border-radius: 50%;
+              background-color: transparent;
+            }
+            &:hover::before {
+              background-color: #20949654;
+            }
+            &.active {
+              &::before {
+                background-color: #209596;
+              }
+            }
           }
         }
         .desc {
+          color: #265073;
           font-size: 15px;
           text-align: center;
           margin-right: 5px;
           max-width: 70%;
           flex-grow: 7;
         }
-        .edit {
-          background-color: #209596;
+        .edit,
+        .remove {
           padding: 5px 10px;
           border-radius: 20px;
+          margin-left: 5px;
+        }
+        .edit {
           color: white;
-          margin-right: 5px;
+          background-color: #209496c6;
+          &:hover {
+            background-color: #209596;
+          }
         }
         .remove {
           color: #dc3545;
+          background-color: #b8334061;
+          &:hover {
+            background-color: #b83340a9;
+          }
         }
         .complete {
           color: gray;
