@@ -10,7 +10,7 @@
     "deploy":"gh-pages -d build"
   },
   "dependencies": {
-    "homepage":"http://moh123mos.github.io/Todo-By-Vuejs",
+    "homepage":"http://moh123mos.github.io/Todo-App-Vue",
     "@popperjs/core": "^2.11.8",
     "@vuelidate/core": "^2.0.3",
     "@vuelidate/validators": "^2.0.4",
